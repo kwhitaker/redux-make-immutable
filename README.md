@@ -6,8 +6,9 @@ Redux middleware to coerce native javascript types into the equivalent Immutable
 
 ### Usage
 
-```
-import makeImmutable from 'redux-make-immutable'
+```javascript
+import makeImmutable from 'redux-make-immutable';
+
 ... applyMiddleware(
       thunkMiddleware,
       loggerMiddleware,
