@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/kwhitaker/redux-make-immutable#readme",
   "dependencies": {
+    "flux-standard-action": "^0.6.0",
     "immutable": "^3.7.5"
   },
   "devDependencies": {

@@ -1,19 +1,22 @@
 import { Iterable, fromJS } from 'immutable';
+import { isFSA } from 'flux-standard-action';
 
 export default function makeImmutable() {
   return next => action => {
-    let result;
-    if (!Iterable.isIterable(action.payload)) {
-      const newAction = Object.assign({}, action,
-        {
-          payload: fromJS(action.payload),
-        }
-      );
-      result = next(newAction);
-    } else {
-      result = next(action);
-    }
+    if (action.type === undefined) { return next(action); }
 
-    return result;
+    const key = isFSA(action) ? 'payload' :
+      action[Object.keys(action).map(k => {
+        return k !== 'type';
+      })][0];
+
+    let payload = action[key];
+    payload = Iterable.isIterable(payload) ? payload : fromJS(payload);
+
+    const newAction = Object.assign({}, action, {
+      [key]: payload,
+    });
+
+    return next(newAction);
   };
 }
