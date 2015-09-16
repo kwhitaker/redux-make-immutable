@@ -1,6 +1,6 @@
 {
   "name": "redux-make-immutable",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Coerces native Javascript types into Immutable JS types",
   "main": "lib/index.js",
   "scripts": {
