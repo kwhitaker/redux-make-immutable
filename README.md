@@ -5,6 +5,7 @@ Redux middleware to coerce native javascript types into the equivalent Immutable
 `npm I -s redux-make-immutable`
 
 ### Usage
+
 ```
 import makeImmutable from 'redux-make-immutable'
 ... applyMiddleware(
