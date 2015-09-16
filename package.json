@@ -1,0 +1,39 @@
+{
+  "name": "redux-make-immutable",
+  "version": "0.0.1",
+  "description": "Coerces native Javascript types into Immutable JS types",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublish": "rimraf lib && babel src --out-dir lib",
+    "test": "mocha --compilers js:babel/register --reporter spec test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwhitaker/redux-make-immutable.git"
+  },
+  "keywords": [
+    "javascript",
+    "react",
+    "redux",
+    "middleware",
+    "immutable"
+  ],
+  "author": "Kevin Whitaker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kwhitaker/redux-make-immutable/issues"
+  },
+  "homepage": "https://github.com/kwhitaker/redux-make-immutable#readme",
+  "dependencies": {
+    "immutable": "^3.7.5"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.24",
+    "babel-eslint": "^4.1.2",
+    "chai": "^3.2.0",
+    "eslint": "^1.4.3",
+    "eslint-config-airbnb": "0.0.8",
+    "mocha": "^2.3.2"
+  }
+}
