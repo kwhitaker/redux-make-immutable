@@ -1,25 +1,56 @@
 import chai from 'chai';
-import { fromJS } from 'immutable';
+import { Iterable, fromJS } from 'immutable';
 import makeImmutable from '../src/index';
 
 describe('immutable middleware', () => {
+  let result;
+  const TYPE = 'SOME_TYPE';
   const notIterable = {
-    name: 'not an immutable object',
+    values: [1, 2, 3],
   };
 
   const iterable = fromJS(notIterable);
 
   const FSA = {
-    type: 'someType',
+    type: TYPE,
     payload: notIterable,
   };
 
-  const notFSA = Object.assign({}, iterable, {
-    type: 'someType',
+  const immutableFSA = {
+    type: TYPE,
+    payload: iterable,
+  };
+
+  const notFSA = {
+    type: TYPE,
+    values: notIterable.values,
+  };
+
+  const weirdAction = {
+    payload: notIterable,
+  };
+
+  const doNext = (action) => action;
+
+  it('should coerce native types', () => {
+    result = makeImmutable()(doNext)(FSA);
+    chai.expect(Iterable.isIterable(result.payload))
+      .to.equal(true);
   });
 
-  const nextHandler = makeImmutable();
-  it('Should coerce native types', () => {
+  it('should ignore immutable types', () => {
+    result = makeImmutable()(doNext)(immutableFSA);
+    chai.expect(result.payload).to.equal(iterable);
+  });
 
+  it('should work with non-standard-actions', () => {
+    result = makeImmutable()(doNext)(notFSA);
+    chai.expect(Iterable.isIterable(result.values))
+      .to.equal(true);
+  });
+
+  it('should forward weird actions', () => {
+    result = makeImmutable()(doNext)(weirdAction);
+    chai.expect(result).to.equal(weirdAction);
   });
 });

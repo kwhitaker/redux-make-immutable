@@ -3,16 +3,22 @@ import { isFSA } from 'flux-standard-action';
 
 export default function makeImmutable() {
   return next => action => {
+    let key;
+    let payload;
     if (action.type === undefined) { return next(action); }
 
-    const key = isFSA(action) ? 'payload' :
-      action[Object.keys(action).map(k => {
+    if (isFSA(action)) {
+      key = 'payload';
+      payload = action[key];
+    } else {
+
+      key = Object.keys(action).find(k => {
         return k !== 'type';
-      })][0];
+      });
+      payload = action[key];
+    }
 
-    let payload = action[key];
     payload = Iterable.isIterable(payload) ? payload : fromJS(payload);
-
     const newAction = Object.assign({}, action, {
       [key]: payload,
     });
